@@ -46,9 +46,6 @@ pattern = re.compile(
     f'{SKIP_NOT_INTERESTING}'
     r'\s*'
     f'{intraspecific_rank("f")}?'
-    r'\s*'
-    r'.*'
-    r'$'
 )
 
 
