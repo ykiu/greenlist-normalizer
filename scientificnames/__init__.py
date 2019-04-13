@@ -67,8 +67,8 @@ def normal_name(suffix):
 ROOT_PATTERN = (
     r'^'
     f'{normal_name("_0")}'
-    r'(:'
-    r'x'
+    r'(?:'
+    r'x\s+'
     f'{normal_name("_1")}'
     r')?'
 )
