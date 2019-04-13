@@ -12,9 +12,9 @@ def skip_except(exceptions):
         r'('
         + (
             ''.join(
-                r'(?!\b'
+                r'(?!'
                 f'{exception}'
-                r'\.\s)'
+                r')'
                 for exception in exceptions
             )
         )
@@ -22,7 +22,11 @@ def skip_except(exceptions):
     )
 
 
-SKIP_NOT_INTERESTING = skip_except(['subsp', 'var', 'f'])
+SKIP_NOT_INTERESTING = skip_except([
+    r'\bsubsp\.\s',
+    r'\bvar\.\s',
+    r'\bf\.\s'
+])
 
 
 pattern = re.compile(
