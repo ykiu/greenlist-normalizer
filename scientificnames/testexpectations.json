@@ -1,5 +1,38 @@
 [
     [
+        "subspecies",
+        "Ranunculus altaicus Laxm. subsp. shinanoalpinus (Ohwi) Kadota",
+        {
+            "genus": "Ranunculus",
+            "species": "altaicus",
+            "subsp": "shinanoalpinus",
+            "var": null,
+            "f": null
+        }
+    ],
+    [
+        "variety",
+        "Clematis meyeniana Walp. var. insularis Sprague",
+        {
+            "genus": "Clematis",
+            "species": "meyaniana",
+            "subsp": null,
+            "var": "insularis",
+            "f": null
+        }
+    ],
+    [
+        "forma",
+        "Clematis lasiandra Maxim. f. albescens Akasawa",
+        {
+            "genus": "Clematis",
+            "species": "lasiandra",
+            "subsp": null,
+            "var": null,
+            "f": "albescens"
+        }
+    ],
+    [
         "multiple infraspecific epithets",
         "Sedum japonicum Siebold ex Miq. subsp. japonicum var. senanense (Makino) Makino f. leucanthemum Honda",
         {
