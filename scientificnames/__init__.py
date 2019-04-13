@@ -33,26 +33,36 @@ SKIP_NOT_INTERESTING = skip_except([
 ])
 
 
-ROOT_PATTERN = (
-    r'^'
-    f'{word("genus")}'
-    r'\s*'
-    r'(?P<is_hybrid>x?)\b'
-    r'\s*'
-    f'{word("species")}'
-    r'\s*'
-    f'{SKIP_NOT_INTERESTING}'
-    r'\s*'
-    f'{intraspecific_rank("subsp")}?'
-    r'\s*'
-    f'{SKIP_NOT_INTERESTING}'
-    r'\s*'
-    f'{intraspecific_rank("var")}?'
-    r'\s*'
-    f'{SKIP_NOT_INTERESTING}'
-    r'\s*'
-    f'{intraspecific_rank("f")}?'
-)
+def normal_name(suffix):
+    genus = word('genus' + suffix)
+    is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x?)\b'
+    species = word('species' + suffix)
+    subsp = intraspecific_rank('subsp' + suffix)
+    var = intraspecific_rank('var' + suffix)
+    f = intraspecific_rank('f' + suffix)
+    return (
+        r'^'
+        f'{genus}'
+        r'\s*'
+        f'{is_hybrid}'
+        r'\s*'
+        f'{species}'
+        r'\s*'
+        f'{SKIP_NOT_INTERESTING}'
+        r'\s*'
+        f'{subsp}?'
+        r'\s*'
+        f'{SKIP_NOT_INTERESTING}'
+        r'\s*'
+        f'{var}?'
+        r'\s*'
+        f'{SKIP_NOT_INTERESTING}'
+        r'\s*'
+        f'{f}?'
+    )
+
+
+ROOT_PATTERN = normal_name('')
 
 pattern = re.compile(ROOT_PATTERN)
 
