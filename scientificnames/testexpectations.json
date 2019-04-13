@@ -1,0 +1,25 @@
+[
+    [
+        "multiple infraspecific epithets",
+        "Sedum japonicum Siebold ex Miq. subsp. japonicum var. senanense (Makino) Makino f. leucanthemum Honda",
+        {
+            "genus": "Sedum",
+            "species": "japonicum",
+            "subsp": "japonicum",
+            "var": "senanense",
+            "f": "leucanthemum"
+        }
+    ],
+    [
+        "redundant spaces",
+        "Sedum  japonicum  Siebold  ex  Miq.  subsp.  japonicum  var.  senanense  (Makino)  Makino  f.  leucanthemum  Honda",
+        {
+            "genus": "Sedum",
+            "species": "japonicum",
+            "subsp": "japonicum",
+            "var": "senanense",
+            "f": "leucanthemum"
+        }
+    ]
+]
+
