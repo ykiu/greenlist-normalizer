@@ -3,16 +3,26 @@ import re
 
 def intraspecific_rank(rank):
     return (
-        r'(?P<' + rank + r'>\w+)'
+        r'(?P<' + rank + r'>' + rank + r'\.\s+\w+)'
     )
 
 
-def skip_to_rank_specifier(exception):
+def skip_except(exceptions):
     return (
-        r'((?<!\s'
-        f'{exception}'
-        r'\.\s).)*'
+        r'('
+        + (
+            ''.join(
+                r'(?!\b'
+                f'{exception}'
+                r'\.\s)'
+                for exception in exceptions
+            )
+        )
+        + r'.)*'
     )
+
+
+SKIP_NOT_INTERESTING = skip_except(['subsp', 'var', 'f'])
 
 
 pattern = re.compile(
@@ -21,18 +31,18 @@ pattern = re.compile(
     r'\s+'
     r'(?P<species>\w+?)'
     r'\s+'
-    f'{skip_to_rank_specifier("subsp")}'
+    f'{SKIP_NOT_INTERESTING}'
     r'\s*'
     f'{intraspecific_rank("subsp")}?'
-    r'\s+'
-    f'{skip_to_rank_specifier("var")}'
+    r'\s*'
+    f'{SKIP_NOT_INTERESTING}'
     r'\s*'
     f'{intraspecific_rank("var")}?'
-    r'\s+'
-    f'{skip_to_rank_specifier("f")}'
+    r'\s*'
+    f'{SKIP_NOT_INTERESTING}'
     r'\s*'
     f'{intraspecific_rank("f")}?'
-    r'\s+'
+    r'\s*'
     r'.*'
     r'$'
 )
