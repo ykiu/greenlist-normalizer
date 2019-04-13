@@ -1,7 +1,7 @@
 import re
 
 
-EXTENDED_W = r'[^\s]'  # similar to \w but matches more characters
+EXTENDED_W = r'[^\s^\.]'  # similar to \w but matches more characters
 
 
 def word(name):
@@ -38,7 +38,7 @@ SKIP_NOT_INTERESTING = skip_except([
 
 
 def normal_name(suffix):
-    genus = word('genus' + suffix)
+    genus = word('genus' + suffix) + r'\.?'
     is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x)?\b'
     species = word('species' + suffix)
     subsp = intraspecific_rank('subsp' + suffix, 'subsp')
