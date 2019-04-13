@@ -31,10 +31,12 @@ SKIP_NOT_INTERESTING = skip_except([
 
 ROOT_PATTERN = (
     r'^'
-    r'(?P<genus>[^\s]+?)'
-    r'\s+'
-    r'(?P<species>[^\s]+?)'
-    r'\s+'
+    r'(?P<genus>[^\s]+)\b'
+    r'\s*'
+    r'(?P<is_hybrid>x?)\b'
+    r'\s*'
+    r'(?P<species>[^\s]+)\b'
+    r'\s*'
     f'{SKIP_NOT_INTERESTING}'
     r'\s*'
     f'{intraspecific_rank("subsp")}?'
