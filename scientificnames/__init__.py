@@ -29,7 +29,7 @@ SKIP_NOT_INTERESTING = skip_except([
 ])
 
 
-pattern = re.compile(
+ROOT_PATTERN = (
     r'^'
     r'(?P<genus>\w+?)'
     r'\s+'
@@ -47,6 +47,8 @@ pattern = re.compile(
     r'\s*'
     f'{intraspecific_rank("f")}?'
 )
+
+pattern = re.compile(ROOT_PATTERN)
 
 
 def parse(scientific_name):
