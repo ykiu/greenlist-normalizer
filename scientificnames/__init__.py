@@ -1,13 +1,16 @@
 import re
 
 
+EXTENDED_W = r'[^\s]'  # similar to \w but matches more characters
+
+
 def word(name):
-    return r'(?P<' + name + r'>[^\s]+)\b'
+    return r'(?P<' + name + r'>' + EXTENDED_W + r'+)\b'
 
 
 def intraspecific_rank(name, rank):
     return (
-        r'(?:' + rank + r'\.\s+(?P<' + name + r'>[^\s]+))'
+        r'(?:' + rank + r'\.\s+(?P<' + name + r'>' + EXTENDED_W + r'+))'
     )
 
 
