@@ -8,7 +8,13 @@
             "species_0": "palmatum",
             "subsp_0": null,
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
         }
     ],
     [
@@ -20,7 +26,14 @@
             "species_0": "pseudo-orobus",
             "subsp_0": null,
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -32,7 +45,14 @@
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -44,7 +64,14 @@
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -56,7 +83,14 @@
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -68,7 +102,14 @@
             "species_0": "altaicus",
             "subsp_0": "shinanoalpinus",
             "var_0": null,
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -80,7 +121,14 @@
             "species_0": "meyeniana",
             "subsp_0": null,
             "var_0": "insularis",
-            "f_0": null
+            "f_0": null,
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -92,7 +140,14 @@
             "species_0": "lasiandra",
             "subsp_0": null,
             "var_0": null,
-            "f_0": "albescens"
+            "f_0": "albescens",
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -104,7 +159,14 @@
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",
-            "f_0": "leucanthemum"
+            "f_0": "leucanthemum",
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ],
     [
@@ -116,7 +178,14 @@
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",
-            "f_0": "leucanthemum"
+            "f_0": "leucanthemum",
+            "genus_1": null,
+            "is_hybrid_1": null,
+            "species_1": null,
+            "subsp_1": null,
+            "var_1": null,
+            "f_1": null
+
         }
     ]
 ]
