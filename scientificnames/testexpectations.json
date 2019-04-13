@@ -22,6 +22,39 @@
         }
     ],
     [
+        "named hybrid",
+        "Neillia x nakatsuriparia (Hid.Takah.) S.H.Oh",
+        {
+            "genus": "Neillia",
+            "species": "nakatsuriparia",
+            "subsp": null,
+            "var": null,
+            "f": null
+        }
+    ],
+    [
+        "intrageneric hybrid",
+        "Saussurea sinuatoides Nakai x S. triptera Maxim.",
+        {
+            "genus": "Neillia",
+            "species": "nakatsuriparia",
+            "subsp": null,
+            "var": null,
+            "f": null
+        }
+    ],
+    [
+        "intergeneric hybrid",
+        "Lapsanastrum humile (Thunb.) Pak et K.Bremer x Youngia akaoni Seriz.",
+        {
+            "genus": "Neillia",
+            "species": "nakatsuriparia",
+            "subsp": null,
+            "var": null,
+            "f": null
+        }
+    ],
+    [
         "subspecies",
         "Ranunculus altaicus Laxm. subsp. shinanoalpinus (Ohwi) Kadota",
         {
