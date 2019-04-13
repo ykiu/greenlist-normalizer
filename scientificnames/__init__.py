@@ -29,7 +29,8 @@ def skip_except(exceptions):
 SKIP_NOT_INTERESTING = skip_except([
     r'\bsubsp\.\s',
     r'\bvar\.\s',
-    r'\bf\.\s'
+    r'\bf\.\s',
+    r'\bx\s',
 ])
 
 
@@ -58,10 +59,15 @@ def normal_name(suffix):
         f'{SKIP_NOT_INTERESTING}'
         r'\s*'
         f'{f}?'
+        r'\s*'
+        f'{SKIP_NOT_INTERESTING}'
     )
 
 
-ROOT_PATTERN = normal_name('_0')
+ROOT_PATTERN = (
+    r'^'
+    f'{normal_name("_0")}'
+)
 
 pattern = re.compile(ROOT_PATTERN)
 
