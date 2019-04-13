@@ -3,7 +3,7 @@ import re
 
 def intraspecific_rank(rank):
     return (
-        r'(?:' + rank + r'\.\s+(?P<' + rank + r'>\w+))'
+        r'(?:' + rank + r'\.\s+(?P<' + rank + r'>[^\s]+))'
     )
 
 
@@ -31,9 +31,9 @@ SKIP_NOT_INTERESTING = skip_except([
 
 ROOT_PATTERN = (
     r'^'
-    r'(?P<genus>\w+?)'
+    r'(?P<genus>[^\s]+?)'
     r'\s+'
-    r'(?P<species>\w+?)'
+    r'(?P<species>[^\s]+?)'
     r'\s+'
     f'{SKIP_NOT_INTERESTING}'
     r'\s*'

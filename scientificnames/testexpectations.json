@@ -11,6 +11,17 @@
         }
     ],
     [
+        "hyphen",
+        "Vicia pseudo-orobus Fisch. et C.A.Mey.",
+        {
+            "genus": "Vicia",
+            "species": "pseudo-orobus",
+            "subsp": null,
+            "var": null,
+            "f": null
+        }
+    ],
+    [
         "subspecies",
         "Ranunculus altaicus Laxm. subsp. shinanoalpinus (Ohwi) Kadota",
         {
