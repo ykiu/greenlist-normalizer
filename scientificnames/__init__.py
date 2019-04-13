@@ -5,9 +5,9 @@ def word(name):
     return r'(?P<' + name + r'>[^\s]+)\b'
 
 
-def intraspecific_rank(rank):
+def intraspecific_rank(name, rank):
     return (
-        r'(?:' + rank + r'\.\s+(?P<' + rank + r'>[^\s]+))'
+        r'(?:' + rank + r'\.\s+(?P<' + name + r'>[^\s]+))'
     )
 
 
@@ -37,11 +37,10 @@ def normal_name(suffix):
     genus = word('genus' + suffix)
     is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x?)\b'
     species = word('species' + suffix)
-    subsp = intraspecific_rank('subsp' + suffix)
-    var = intraspecific_rank('var' + suffix)
-    f = intraspecific_rank('f' + suffix)
+    subsp = intraspecific_rank('subsp' + suffix, 'subsp')
+    var = intraspecific_rank('var' + suffix, 'var')
+    f = intraspecific_rank('f' + suffix, 'f')
     return (
-        r'^'
         f'{genus}'
         r'\s*'
         f'{is_hybrid}'
@@ -62,7 +61,7 @@ def normal_name(suffix):
     )
 
 
-ROOT_PATTERN = normal_name('')
+ROOT_PATTERN = normal_name('_1')
 
 pattern = re.compile(ROOT_PATTERN)
 
