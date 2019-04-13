@@ -4,7 +4,7 @@
         "Glaucidium palmatum Siebold et Zucc.",
         {
             "genus_0": "Glaucidium",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "palmatum",
             "subsp_0": null,
             "var_0": null,
@@ -22,7 +22,7 @@
         "Vicia pseudo-orobus Fisch. et C.A.Mey.",
         {
             "genus_0": "Vicia",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "pseudo-orobus",
             "subsp_0": null,
             "var_0": null,
@@ -60,7 +60,7 @@
         "Saussurea sinuatoides Nakai x S. triptera Maxim.",
         {
             "genus_0": "Neillia",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
@@ -79,7 +79,7 @@
         "Lapsanastrum humile (Thunb.) Pak et K.Bremer x Youngia akaoni Seriz.",
         {
             "genus_0": "Neillia",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
@@ -98,7 +98,7 @@
         "Ranunculus altaicus Laxm. subsp. shinanoalpinus (Ohwi) Kadota",
         {
             "genus_0": "Ranunculus",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "altaicus",
             "subsp_0": "shinanoalpinus",
             "var_0": null,
@@ -117,7 +117,7 @@
         "Clematis meyeniana Walp. var. insularis Sprague",
         {
             "genus_0": "Clematis",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "meyeniana",
             "subsp_0": null,
             "var_0": "insularis",
@@ -136,7 +136,7 @@
         "Clematis lasiandra Maxim. f. albescens Akasawa",
         {
             "genus_0": "Clematis",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "lasiandra",
             "subsp_0": null,
             "var_0": null,
@@ -155,7 +155,7 @@
         "Sedum japonicum Siebold ex Miq. subsp. japonicum var. senanense (Makino) Makino f. leucanthemum Honda",
         {
             "genus_0": "Sedum",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",
@@ -174,7 +174,7 @@
         "Sedum  japonicum  Siebold  ex  Miq.  subsp.  japonicum  var.  senanense  (Makino)  Makino  f.  leucanthemum  Honda",
         {
             "genus_0": "Sedum",
-            "is_hybrid_0": "",
+            "is_hybrid_0": null,
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",

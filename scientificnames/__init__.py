@@ -36,7 +36,7 @@ SKIP_NOT_INTERESTING = skip_except([
 
 def normal_name(suffix):
     genus = word('genus' + suffix)
-    is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x?)\b'
+    is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x)?\b'
     species = word('species' + suffix)
     subsp = intraspecific_rank('subsp' + suffix, 'subsp')
     var = intraspecific_rank('var' + suffix, 'var')
