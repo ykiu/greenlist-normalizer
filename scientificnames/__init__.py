@@ -3,7 +3,7 @@ import re
 
 def intraspecific_rank(rank):
     return (
-        r'(?P<' + rank + r'>' + rank + r'\.\s+\w+)'
+        r'(?:' + rank + r'\.\s+(?P<' + rank + r'>\w+))'
     )
 
 
