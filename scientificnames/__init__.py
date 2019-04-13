@@ -1,6 +1,10 @@
 import re
 
 
+def word(name):
+    return r'(?P<' + name + r'>[^\s]+)\b'
+
+
 def intraspecific_rank(rank):
     return (
         r'(?:' + rank + r'\.\s+(?P<' + rank + r'>[^\s]+))'
@@ -31,11 +35,11 @@ SKIP_NOT_INTERESTING = skip_except([
 
 ROOT_PATTERN = (
     r'^'
-    r'(?P<genus>[^\s]+)\b'
+    f'{word("genus")}'
     r'\s*'
     r'(?P<is_hybrid>x?)\b'
     r'\s*'
-    r'(?P<species>[^\s]+)\b'
+    f'{word("species")}'
     r'\s*'
     f'{SKIP_NOT_INTERESTING}'
     r'\s*'
