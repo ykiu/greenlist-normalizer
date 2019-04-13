@@ -1,5 +1,16 @@
 [
     [
+        "basic",
+        "Glaucidium palmatum Siebold et Zucc.",
+        {
+            "genus": "Glaucidium",
+            "species": "palmatum",
+            "subsp": null,
+            "var": null,
+            "f": null
+        }
+    ],
+    [
         "subspecies",
         "Ranunculus altaicus Laxm. subsp. shinanoalpinus (Ohwi) Kadota",
         {
