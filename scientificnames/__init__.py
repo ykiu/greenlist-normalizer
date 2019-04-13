@@ -61,7 +61,7 @@ def normal_name(suffix):
     )
 
 
-ROOT_PATTERN = normal_name('_1')
+ROOT_PATTERN = normal_name('_0')
 
 pattern = re.compile(ROOT_PATTERN)
 
