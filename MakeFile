@@ -1,2 +1,5 @@
+download:
+	- pipenv run python -c "import greenlist; greenlist.download_all()"
+
 test:
 	- pipenv run python -m unittest discover -p tests.py

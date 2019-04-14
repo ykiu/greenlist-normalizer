@@ -108,3 +108,6 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Specific to the greenlist normalizer project
+greenlist/xls
