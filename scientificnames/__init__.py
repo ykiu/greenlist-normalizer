@@ -4,7 +4,15 @@ import re
 EXTENDED_W = r'[^\s^\.]'  # similar to \w but matches more characters
 
 
-INTRA_SPECIFIC_RANKS = ['subsp', 'nothosubsp', 'var', 'nothovar', 'subvar', 'f']
+INTRA_SPECIFIC_RANKS = [
+    'subsp',
+    'nothosubsp',
+    'var',
+    'nothovar',
+    'subvar',
+    'f',
+    'nothof',
+]
 
 
 SPECIEAL_WORDS = [
