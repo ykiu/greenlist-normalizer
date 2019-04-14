@@ -4,6 +4,15 @@ import re
 EXTENDED_W = r'[^\s^\.]'  # similar to \w but matches more characters
 
 
+INTRA_SPECIFIC_RANKS = ['subsp', 'var', 'subvar', 'f']
+
+
+SPECIEAL_WORDS = [
+    *(rank + r'\.' for rank in INTRA_SPECIFIC_RANKS),
+    'x'
+]
+
+
 def word(name):
     return r'(?P<' + name + r'>' + EXTENDED_W + r'+)'
 
@@ -29,13 +38,10 @@ def skip_except(exceptions):
     )
 
 
-SKIP_NOT_INTERESTING = skip_except([
-    r'\bsubsp\.\s',
-    r'\bvar\.\s',
-    r'\bsubvar\.\s',
-    r'\bf\.\s',
-    r'\bx\s',
-])
+SKIP_NOT_INTERESTING = skip_except(
+    r'\b' + word + r'\s'
+    for word in SPECIEAL_WORDS
+)
 
 
 def normal_name(suffix):
