@@ -33,7 +33,7 @@ def intraspecific_rank(name, rank):
 
 def skip_except(exceptions):
     return (
-        r'('
+        r'(?:'
         + (
             ''.join(
                 r'(?!'
