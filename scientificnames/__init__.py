@@ -32,6 +32,7 @@ def skip_except(exceptions):
 SKIP_NOT_INTERESTING = skip_except([
     r'\bsubsp\.\s',
     r'\bvar\.\s',
+    r'\bsubvar\.\s',
     r'\bf\.\s',
     r'\bx\s',
 ])
@@ -43,6 +44,7 @@ def normal_name(suffix):
     species = word('species' + suffix)
     subsp = intraspecific_rank('subsp' + suffix, 'subsp')
     var = intraspecific_rank('var' + suffix, 'var')
+    subvar = intraspecific_rank('subvar' + suffix, 'subvar')
     f = intraspecific_rank('f' + suffix, 'f')
     return (
         f'{genus}'
@@ -54,6 +56,8 @@ def normal_name(suffix):
         f'{subsp}?'
         f'{SKIP_NOT_INTERESTING}'
         f'{var}?'
+        f'{SKIP_NOT_INTERESTING}'
+        f'{subvar}?'
         f'{SKIP_NOT_INTERESTING}'
         f'{f}?'
         f'{SKIP_NOT_INTERESTING}'
