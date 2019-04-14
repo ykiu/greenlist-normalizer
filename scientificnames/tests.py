@@ -19,4 +19,6 @@ class ScientificNameTest(unittest.TestCase):
                 actual = scientificnames.parse(original)
                 self.assertIsNotNone(actual)
                 actual_groups = actual.groupdict()
-                assert expected_groups == actual_groups, actual_groups
+                assert expected_groups == actual_groups, (
+                    f'\nexpected:\n{expected_groups}\nactual:\n{actual_groups}'
+                )
