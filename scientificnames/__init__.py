@@ -48,10 +48,12 @@ def normal_name(suffix):
     genus = word('genus' + suffix) + r'\.?'
     is_hybrid = r'(?P<' + 'is_hybrid' + suffix + r'>x)?\b'
     species = word('species' + suffix)
-    subsp = intraspecific_rank('subsp' + suffix, 'subsp')
-    var = intraspecific_rank('var' + suffix, 'var')
-    subvar = intraspecific_rank('subvar' + suffix, 'subvar')
-    f = intraspecific_rank('f' + suffix, 'f')
+
+    intraspecific_ranks = ''.join(
+        intraspecific_rank(rank + suffix, rank) + r'?' + SKIP_NOT_INTERESTING
+        for rank in INTRA_SPECIFIC_RANKS
+    )
+
     return (
         f'{genus}'
         r'\s*'
@@ -59,14 +61,7 @@ def normal_name(suffix):
         r'\s*'
         f'{species}'
         f'{SKIP_NOT_INTERESTING}'
-        f'{subsp}?'
-        f'{SKIP_NOT_INTERESTING}'
-        f'{var}?'
-        f'{SKIP_NOT_INTERESTING}'
-        f'{subvar}?'
-        f'{SKIP_NOT_INTERESTING}'
-        f'{f}?'
-        f'{SKIP_NOT_INTERESTING}'
+        f'{intraspecific_ranks}'
     )
 
 
