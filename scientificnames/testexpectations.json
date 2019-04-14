@@ -8,16 +8,16 @@
             "species_0": "palmatum",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
         }
     ],
@@ -30,16 +30,16 @@
             "species_0": "pseudo-orobus",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -53,16 +53,16 @@
             "species_0": "nakatsuriparia",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -76,16 +76,16 @@
             "species_0": "sinuatoides",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": "S",
             "is_hybrid_1": null,
             "species_1": "triptera",
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -99,16 +99,16 @@
             "species_0": "humile",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": "Youngia",
             "is_hybrid_1": null,
             "species_1": "akaoni",
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -122,16 +122,16 @@
             "species_0": "altaicus",
             "subsp_0": "shinanoalpinus",
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -145,16 +145,16 @@
             "species_0": "meyeniana",
             "subsp_0": null,
             "var_0": "insularis",
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -168,16 +168,16 @@
             "species_0": "acris",
             "subsp_0": null,
             "var_0": "nipponicus",
-            "subvar_0": "glabrescens",
             "nothovar_0": null,
+            "subvar_0": "glabrescens",
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -191,16 +191,16 @@
             "species_0": "mandshurica",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": "avellana",
+            "subvar_0": null,
             "f_0": null,
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -214,16 +214,16 @@
             "species_0": "lasiandra",
             "subsp_0": null,
             "var_0": null,
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": "albescens",
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -237,16 +237,16 @@
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": "leucanthemum",
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
@@ -260,16 +260,16 @@
             "species_0": "japonicum",
             "subsp_0": "japonicum",
             "var_0": "senanense",
-            "subvar_0": null,
             "nothovar_0": null,
+            "subvar_0": null,
             "f_0": "leucanthemum",
             "genus_1": null,
             "is_hybrid_1": null,
             "species_1": null,
             "subsp_1": null,
             "var_1": null,
-            "subvar_1": null,
             "nothovar_1": null,
+            "subvar_1": null,
             "f_1": null
 
         }
