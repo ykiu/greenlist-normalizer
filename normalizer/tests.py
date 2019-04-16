@@ -1,3 +1,4 @@
+from io import StringIO
 from pathlib import Path
 from unittest import TestCase
 from csv import DictReader
@@ -5,11 +6,28 @@ from csv import DictReader
 
 from normalizer import (
     rows_to_taxa,
+    dump,
     Taxon
 )
 
 
-sample_path = Path(__file__).parent.joinpath('sample.csv')
+def assert_equal(expected, actual):
+    assert expected == actual, (
+        f'\nexpected:\n{expected}\nactual:\n{actual}'
+    )
+
+
+def prepend_module_dir(path):
+    return Path(__file__).parent.joinpath(path)
+
+
+sample_path = prepend_module_dir('sample.csv')
+sample_normalized_taxa_path = prepend_module_dir(
+    'sample_normalized_taxa.csv')
+sample_normalized_scientific_names_path = prepend_module_dir(
+    'sample_normalized_scientific_names.csv')
+sample_normalized_common_names_path = prepend_module_dir(
+    'sample_normalized_common_names.csv')
 
 SAMPLE_TAXA = (
     Taxon(
@@ -71,6 +89,11 @@ SAMPLE_TAXA = (
 )
 
 
+def read_content(path: Path):
+    with path.open(encoding='utf8', newline='\r\n') as fp:
+        return fp.read()
+
+
 class RowsToTaxaTest(TestCase):
 
     def setUp(self):
@@ -92,6 +115,25 @@ class RowsToTaxaTest(TestCase):
             root_key='plants',
             synonym_delimiter='，',
         ),)
-        assert expected == actual, (
-            f'\nexpected:\n{expected}\nactual:\n{actual}'
-        )
+        assert_equal(expected, actual)
+
+
+class DumpTest(TestCase):
+    def test_normal(self):
+        taxa_fp = StringIO(newline='')
+        common_names_fp = StringIO(newline='')
+        scientific_names_fp = StringIO(newline='')
+        dump(taxa_fp, common_names_fp, scientific_names_fp, SAMPLE_TAXA)
+        actual_taxa = taxa_fp.getvalue()
+        actual_common_names = common_names_fp.getvalue()
+        actual_scientific_names = scientific_names_fp.getvalue()
+
+        expected_taxa = \
+            read_content(sample_normalized_taxa_path)
+        expected_common_names = \
+            read_content(sample_normalized_common_names_path)
+        expected_scientific_names = \
+            read_content(sample_normalized_scientific_names_path)
+        assert_equal(expected_taxa, actual_taxa)
+        assert_equal(expected_common_names, actual_common_names)
+        assert_equal(expected_scientific_names, actual_scientific_names)

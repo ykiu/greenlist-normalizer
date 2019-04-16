@@ -1,6 +1,6 @@
 from collections import namedtuple
 from itertools import groupby
-from csv import DictWriter, DictReader
+from csv import DictWriter
 
 
 import exceptions
@@ -11,24 +11,7 @@ def get_genus(string):
     return string.split()[0]
 
 
-def normalize(
-    source_fp,
-    taxon_fp,
-    cn_fp,
-    sn_fp,
-    sp_common_name_colname,
-    sp_common_name_syn_colname,
-    sp_scientific_name_colname,
-    fa_common_name_colname,
-    fa_scientific_name_colname,
-    root_key,
-):
-    def by_genus(rows):
-        return groupby(
-            rows,
-            lambda x: get_genus(x[sp_scientific_name_colname])
-        )
-
+def dump(taxon_fp, cn_fp, sn_fp, taxa):
     taxon_writer = DictWriter(taxon_fp, ['parent_key', 'key', 'sort_key'])
     taxon_writer.writeheader()
     cn_writer = DictWriter(cn_fp, ['taxon_key', 'name'])
@@ -36,9 +19,22 @@ def normalize(
     sn_writer = DictWriter(sn_fp, ['taxon_key', 'name'])
     sn_writer.writeheader()
 
-    reader = DictReader(source_fp)
-    for genus, rows in by_genus(reader):
-        yield {'parent_key': root_key, 'key': genus, 'sort_key': 0}
+    for taxon in taxa:
+        taxon_writer.writerow({
+            'parent_key': taxon.parent_key,
+            'key': taxon.key,
+            'sort_key': taxon.sort_key
+        })
+        for common_name in taxon.common_names:
+            cn_writer.writerow({
+                'taxon_key': taxon.key,
+                'name': common_name
+            })
+        for scientific_name in taxon.scientific_names:
+            sn_writer.writerow({
+                'taxon_key': taxon.key,
+                'name': scientific_name
+            })
 
 
 def generate_key(scientific_name):
