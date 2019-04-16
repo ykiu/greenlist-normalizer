@@ -12,7 +12,7 @@ from normalizer import (
 sample_path = Path(__file__).parent.joinpath('sample.csv')
 
 
-class NormalizerTest(TestCase):
+class RowsToTaxaTest(TestCase):
 
     def setUp(self):
         self._file = sample_path.open('r', encoding='utf8')
