@@ -17,14 +17,14 @@ def assert_equal(expected, actual):
     )
 
 
-sample_path = Path('normalizer/testdata/original.csv')
-sample_normalized_taxa_path = Path('normalizer/testdata/normalized/taxa.csv')
-sample_normalized_scientific_names_path = Path(
+original_path = Path('normalizer/testdata/original.csv')
+taxa_path = Path('normalizer/testdata/normalized/taxa.csv')
+scientific_names_path = Path(
     'normalizer/testdata/normalized/scientific_names.csv')
-sample_normalized_common_names_path = Path(
+common_names_path = Path(
     'normalizer/testdata/normalized/common_names.csv')
 
-SAMPLE_TAXA = (
+taxon_artifacts = (
     Taxon(
         'plants',
         'cabombaceae',
@@ -92,14 +92,14 @@ def read_content(path: Path):
 class RowsToTaxaTest(TestCase):
 
     def setUp(self):
-        self._file = sample_path.open('r', encoding='utf8')
+        self._file = original_path.open('r', encoding='utf8')
         self.reader = DictReader(self._file)
 
     def tearDown(self):
         self._file.close()
 
     def test_normal(self):
-        expected = SAMPLE_TAXA
+        expected = taxon_artifacts
         actual = (*rows_to_taxa(
             rows=self.reader,
             sp_common_name_colname='新リスト和名',
@@ -118,17 +118,14 @@ class DumpTest(TestCase):
         taxa_fp = StringIO(newline='')
         common_names_fp = StringIO(newline='')
         scientific_names_fp = StringIO(newline='')
-        dump(taxa_fp, common_names_fp, scientific_names_fp, SAMPLE_TAXA)
+        dump(taxa_fp, common_names_fp, scientific_names_fp, taxon_artifacts)
         actual_taxa = taxa_fp.getvalue()
         actual_common_names = common_names_fp.getvalue()
         actual_scientific_names = scientific_names_fp.getvalue()
 
-        expected_taxa = \
-            read_content(sample_normalized_taxa_path)
-        expected_common_names = \
-            read_content(sample_normalized_common_names_path)
-        expected_scientific_names = \
-            read_content(sample_normalized_scientific_names_path)
+        expected_taxa = read_content(taxa_path)
+        expected_common_names = read_content(common_names_path)
+        expected_scientific_names = read_content(scientific_names_path)
         assert_equal(expected_taxa, actual_taxa)
         assert_equal(expected_common_names, actual_common_names)
         assert_equal(expected_scientific_names, actual_scientific_names)
