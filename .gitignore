@@ -111,3 +111,4 @@ dmypy.json
 
 # Specific to the greenlist normalizer project
 downloader/xls
+normalizer/normalized

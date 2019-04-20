@@ -1,9 +1,19 @@
+from contextlib import contextmanager
+from pathlib import Path
 from collections import namedtuple
-from itertools import groupby
-from csv import DictWriter
+from itertools import groupby, chain
+from csv import DictWriter, DictReader
 
 
 from keygenerator import generate_key
+
+fern_source_path = Path('downloader/csv/FernGreenListV1.01.csv')
+angiosperm_source_path = Path('downloader/csv/GreenListAv1.01.csv')
+gymnosperm_source_path = Path('downloader/csv/GymGreenListv1.0.csv')
+
+taxon_dest_path = Path('normalizer/normalized/taxa.csv')
+common_name_dest_path = Path('normalizer/normalized/common_names.csv')
+scientific_name_dest_path = Path('normalizer/normalized/scientific_names.csv')
 
 
 def get_genus(string):
@@ -49,7 +59,7 @@ def rows_to_taxa(
     fa_common_name_colname,
     fa_scientific_name_colname,
     root_key,
-    synonym_delimiter='，',
+    synonym_delimiter='ï¼Œ',
 ):
     def by_genus(rows):
         return groupby(
@@ -100,3 +110,85 @@ def rows_to_taxa(
                     common_names=[sp_cn, *sp_cn_syn],
                     scientific_names=[sp_sn],
                 )
+
+
+@contextmanager
+def read_angiosperms():
+    with angiosperm_source_path.open(
+            encoding='utf8', newline='') as angiosperm_fp:
+        yield rows_to_taxa(
+            rows=DictReader(angiosperm_fp),
+            sp_common_name_colname='新リスト和名',
+            sp_common_name_syn_colname='和名異名',
+            sp_scientific_name_colname='GreenList学名',
+            fa_common_name_colname='APG科和名',
+            fa_scientific_name_colname='APG科名',
+            root_key='magnoliophyta',
+            synonym_delimiter='，',
+        )
+
+
+@contextmanager
+def read_gymnosperms():
+    with gymnosperm_source_path.open(
+            encoding='utf8', newline='') as gymnosperm_fp:
+        yield rows_to_taxa(
+            rows=DictReader(gymnosperm_fp),
+            sp_common_name_colname='GreenList和名',
+            sp_common_name_syn_colname='GreenList和名別名',
+            sp_scientific_name_colname='GreenList学名',
+            fa_common_name_colname='APG科和名',
+            fa_scientific_name_colname='APG科名',
+            root_key='ginkgophyta',
+            synonym_delimiter=', ',
+        )
+
+
+@contextmanager
+def read_ferns():
+    with fern_source_path.open(
+            encoding='utf8', newline='') as fern_fp:
+        yield rows_to_taxa(
+            rows=DictReader(fern_fp),
+            sp_common_name_colname='新リスト和名',
+            sp_common_name_syn_colname='和名異名',
+            sp_scientific_name_colname='GreenList学名',
+            fa_common_name_colname='PPG科和名',
+            fa_scientific_name_colname='PPG科名',
+            root_key='pteridophyta',
+            synonym_delimiter='，',
+        )
+
+
+@contextmanager
+def destinations():
+    with \
+            taxon_dest_path.open(
+                'w', encoding='utf8', newline='') as taxon_fp, \
+            common_name_dest_path.open(
+                'w', encoding='utf8', newline='') as common_name_fp, \
+            scientific_name_dest_path.open(
+                'w', encoding='utf8', newline='') as scientific_name_fp:
+        yield taxon_fp, common_name_fp, scientific_name_fp
+
+
+def normalize_all():
+    with read_angiosperms() as angiosperms_artifacts, \
+            read_gymnosperms() as gymnosperms_artifacts, \
+            read_ferns() as ferns_artifacts:
+        root_artifacts = [
+            Taxon('tracheophytes', 'pteridophyta', 0,
+                  ['シダ植物門'], ['Pteridophyta']),
+            Taxon('tracheophytes', 'ginkgophyta', 0,
+                  ['裸子植物門'], ['Ginkgophyta']),
+            Taxon('tracheophytes', 'magnoliophyta', 0,
+                  ['被子植物門'], ['Magnoliophyta']),
+        ]
+        all_artifacts = chain(
+            root_artifacts,
+            ferns_artifacts,
+            gymnosperms_artifacts,
+            angiosperms_artifacts,
+        )
+        with destinations() as (taxon_fp, common_name_fp, scientific_name_fp):
+            dump(taxon_fp, common_name_fp, scientific_name_fp, all_artifacts)
