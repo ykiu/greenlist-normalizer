@@ -17,17 +17,12 @@ def assert_equal(expected, actual):
     )
 
 
-def prepend_module_dir(path):
-    return Path(__file__).parent.joinpath(path)
-
-
-sample_path = prepend_module_dir('sample.csv')
-sample_normalized_taxa_path = prepend_module_dir(
-    'sample_normalized_taxa.csv')
-sample_normalized_scientific_names_path = prepend_module_dir(
-    'sample_normalized_scientific_names.csv')
-sample_normalized_common_names_path = prepend_module_dir(
-    'sample_normalized_common_names.csv')
+sample_path = Path('normalizer/testdata/original.csv')
+sample_normalized_taxa_path = Path('normalizer/testdata/normalized/taxa.csv')
+sample_normalized_scientific_names_path = Path(
+    'normalizer/testdata/normalized/scientific_names.csv')
+sample_normalized_common_names_path = Path(
+    'normalizer/testdata/normalized/common_names.csv')
 
 SAMPLE_TAXA = (
     Taxon(
