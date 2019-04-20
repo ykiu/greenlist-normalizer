@@ -25,62 +25,14 @@ common_names_path = Path(
     'normalizer/testdata/normalized/common_names.csv')
 
 taxon_artifacts = (
-    Taxon(
-        'plants',
-        'cabombaceae',
-        0,
-        ['ジュンサイ科'],
-        ['Cabombaceae']
-    ),
-    Taxon(
-        'cabombaceae',
-        'brasenia',
-        0,
-        [],
-        ['Brasenia']
-    ),
-    Taxon(
-        'brasenia',
-        'brasenia_schreberi',
-        0,
-        ['ジュンサイ'],
-        ['Brasenia schreberi J.F.Gmel.']
-    ),
-    Taxon(
-        'plants',
-        'nymphaeaceae',
-        1,
-        ['スイレン科'],
-        ['Nymphaeaceae']
-    ),
-    Taxon(
-        'nymphaeaceae',
-        'euryale',
-        0,
-        [],
-        ['Euryale']
-    ),
-    Taxon(
-        'euryale',
-        'euryale_ferox',
-        0,
-        ['オニバス'],
-        ['Euryale ferox Salisb.']
-    ),
-    Taxon(
-        'nymphaeaceae',
-        'nuphar',
-        1,
-        [],
-        ['Nuphar']
-    ),
-    Taxon(
-        'nuphar',
-        'nuphar_japonica',
-        0,
-        ['コウホネ'],
-        ['Nuphar japonica DC.']
-    ),
+    Taxon('plants', 'cabombaceae', 0, ['ジュンサイ科'], ['Cabombaceae']),
+    Taxon('cabombaceae', 'brasenia', 0, [], ['Brasenia']),
+    Taxon('brasenia', 'brasenia_schreberi', 0, ['ジュンサイ'], ['Brasenia schreberi J.F.Gmel.']),  # noqa: E501
+    Taxon('plants', 'nymphaeaceae', 1, ['スイレン科'], ['Nymphaeaceae']),
+    Taxon('nymphaeaceae', 'euryale', 0, [], ['Euryale']),
+    Taxon('euryale', 'euryale_ferox', 0, ['オニバス'], ['Euryale ferox Salisb.']),
+    Taxon('nymphaeaceae', 'nuphar', 1, [], ['Nuphar']),
+    Taxon('nuphar', 'nuphar_japonica', 0, ['コウホネ'], ['Nuphar japonica DC.']),
 )
 
 
