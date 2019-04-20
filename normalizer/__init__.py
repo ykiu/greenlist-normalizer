@@ -3,8 +3,7 @@ from itertools import groupby
 from csv import DictWriter
 
 
-import exceptions
-import scientificnames
+from keygenerator import generate_key
 
 
 def get_genus(string):
@@ -35,15 +34,6 @@ def dump(taxon_fp, cn_fp, sn_fp, taxa):
                 'taxon_key': taxon.key,
                 'name': scientific_name
             })
-
-
-def generate_key(scientific_name):
-    match = scientificnames.parse(scientific_name)
-    if not match:
-        raise exceptions.UnparsableScientificNameException(
-            f'Failed to parse"{scientific_name}"', scientific_name)
-    key = '_'.join(item.lower() for item in match.groups() if item is not None)
-    return key
 
 
 Taxon = namedtuple(
