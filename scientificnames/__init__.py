@@ -53,6 +53,7 @@ SKIP_NOT_INTERESTING = skip_except(
 
 
 def normal_name(suffix):
+    hybrid_before_gen = r'(?P<' + 'hybrid_before_gen' + suffix + r'>x)?\b'
     genus = word('genus' + suffix) + r'\.?'
     hybrid_before_sp = r'(?P<' + 'hybrid_before_sp' + suffix + r'>x)?\b'
     species = word('species' + suffix)
@@ -63,6 +64,8 @@ def normal_name(suffix):
     )
 
     return (
+        f'{hybrid_before_gen}'
+        r'\s*'
         f'{genus}'
         r'\s*'
         f'{hybrid_before_sp}'
@@ -77,7 +80,6 @@ ROOT_PATTERN = (
     r'^'
     f'{normal_name("_0")}'
     r'(?:'
-    r'x\s+'
     f'{normal_name("_1")}'
     r')?'
 )
