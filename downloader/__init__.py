@@ -12,8 +12,8 @@ BASE_FILENAMES = [
     'GreenListAv1.01',
     'GymGreenListv1.0'
 ]
-CSV_PATH = 'greenlist/csv/'
-XLS_PATH = 'greenlist/xls/'
+CSV_PATH = 'downloader/csv/'
+XLS_PATH = 'downloader/xls/'
 
 
 def download_xls_as_csv(url, xlsfile, csvfile):

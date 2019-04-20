@@ -110,4 +110,4 @@ venv.bak/
 dmypy.json
 
 # Specific to the greenlist normalizer project
-greenlist/xls
+downloader/xls
