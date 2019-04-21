@@ -1,6 +1,9 @@
 normalize:
 	- pipenv run python -c "import normalizer; normalizer.normalize_all()"
 
+validate:
+	- pipenv run python -c "import validator; validator.validate_all()"
+
 download:
 	- pipenv run python -c "import downloader; downloader.download_all()"
 
