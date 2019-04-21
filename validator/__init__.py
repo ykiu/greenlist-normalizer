@@ -8,7 +8,8 @@ COMMON_NAMES_PATH = Path('normalizer/normalized/common_names.csv')
 SCIENTIFIC_NAMES_PATH = Path('normalizer/normalized/scientific_names.csv')
 
 
-FULLWIDTH = re.compile(r'[\uff20-\uff9f]')
+SCIENTIFIC_NAME_UNALLOWED = re.compile(
+    r'[^\"a-zA-Z_\-\,\s\(\.\)[^\"a-zA-Z_\-\,\s\(\.\)éôüöèó\'áČÅ]')
 COMMON_NAME_UNALLOWED = re.compile(r'[^\u30a1-\u30faー被裸子植物門科×]')
 
 
@@ -27,7 +28,7 @@ class Validator:
 
 
 cn_validator = Validator([COMMON_NAME_UNALLOWED])
-sn_validator = Validator([FULLWIDTH])
+sn_validator = Validator([SCIENTIFIC_NAME_UNALLOWED])
 
 
 def validate_all():
