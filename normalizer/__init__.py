@@ -5,8 +5,9 @@ from collections import namedtuple
 from itertools import groupby, chain
 from csv import DictWriter, DictReader
 
-
+import scientificnames
 from keygenerator import generate_key
+
 
 fern_source_path = Path('downloader/csv/FernGreenListV1.01.csv')
 angiosperm_source_path = Path('downloader/csv/GreenListAv1.01.csv')
@@ -18,7 +19,7 @@ scientific_name_dest_path = Path('normalizer/normalized/scientific_names.csv')
 
 
 def get_genus(string):
-    return string.split()[0]
+    return scientificnames.parse(string).group('genus_0')
 
 
 def dump(taxon_fp, cn_fp, sn_fp, taxa):
