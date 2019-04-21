@@ -52,6 +52,14 @@ Taxon = namedtuple(
     ['parent_key', 'key', 'sort_key', 'common_names', 'scientific_names'])
 
 
+def normalize_common_name(common_name: str, delim):
+    return [
+        s.strip().replace("'", '')
+        for s in common_name.split(delim)
+        if s != ''
+    ]
+
+
 def rows_to_taxa(
     rows,
     sp_common_name_colname,
@@ -99,18 +107,15 @@ def rows_to_taxa(
             for sort_key, row in enumerate(rows):
                 sp_sn = row[sp_scientific_name_colname]
                 species_key = generate_key(sp_sn)
-                sp_cn = row[sp_common_name_colname]
-                sp_cn_syn = [
-                    s.strip()
-                    for s in row[sp_common_name_syn_colname].split(
-                        synonym_delimiter)
-                    if s != ''
-                ]
+                sp_cns = normalize_common_name(
+                    row[sp_common_name_colname], synonym_delimiter)
+                sp_cn_syns = normalize_common_name(
+                    row[sp_common_name_syn_colname], synonym_delimiter)
                 yield Taxon(
                     parent_key=genus_key,
                     key=species_key,
                     sort_key=sort_key,
-                    common_names=[sp_cn, *sp_cn_syn],
+                    common_names=[*sp_cns, *sp_cn_syns],
                     scientific_names=[sp_sn],
                 )
 

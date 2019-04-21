@@ -9,9 +9,8 @@ SCIENTIFIC_NAMES_PATH = Path('normalizer/normalized/scientific_names.csv')
 
 
 COMMA = re.compile(r'\,')
-
-
-UNALLOWED_PATTERNS = [COMMA]
+QUOTES = re.compile(r'[\"\']')
+FULLWIDTH = re.compile(r'[\uff20-\uff9f]')
 
 
 class ValidationFailed(Exception):
@@ -28,8 +27,8 @@ class Validator:
                 raise ValidationFailed(string)
 
 
-cn_validator = Validator([COMMA])
-sn_validator = Validator([COMMA])
+cn_validator = Validator([COMMA, FULLWIDTH, QUOTES])
+sn_validator = Validator([FULLWIDTH])
 
 
 def validate_all():
