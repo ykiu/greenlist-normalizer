@@ -8,9 +8,8 @@ COMMON_NAMES_PATH = Path('normalizer/normalized/common_names.csv')
 SCIENTIFIC_NAMES_PATH = Path('normalizer/normalized/scientific_names.csv')
 
 
-COMMA = re.compile(r'\,')
-QUOTES = re.compile(r'[\"\']')
 FULLWIDTH = re.compile(r'[\uff20-\uff9f]')
+COMMON_NAME_UNALLOWED = re.compile(r'[^\u30a1-\u30faー被裸子植物門科×]')
 
 
 class ValidationFailed(Exception):
@@ -27,7 +26,7 @@ class Validator:
                 raise ValidationFailed(string)
 
 
-cn_validator = Validator([COMMA, FULLWIDTH, QUOTES])
+cn_validator = Validator([COMMON_NAME_UNALLOWED])
 sn_validator = Validator([FULLWIDTH])
 
 

@@ -1,3 +1,4 @@
+import re
 import unicodedata
 from contextlib import contextmanager
 from pathlib import Path
@@ -53,18 +54,11 @@ Taxon = namedtuple(
     ['parent_key', 'key', 'sort_key', 'common_names', 'scientific_names'])
 
 
-def normalize_common_name(common_name: str, delim):
-    return [
-        s.replace(
-            "'", ''
-        ).replace(
-            '(中池)', ''
-        ).replace(
-            '(temp.)', ''
-        ).strip()
-        for s in common_name.split(delim)
-        if s != ''
-    ]
+def normalize_common_name(common_name: str):
+    cleaned_cn = re.sub(r'[\(\[「].*?[\)\]」]|\'|自生\?', '', common_name)
+    split_cn = [s.strip() for s in re.split(r'[\.\,。、]', cleaned_cn)]
+    filtered_cn = [s for s in split_cn if s]
+    return filtered_cn
 
 
 def rows_to_taxa(
@@ -75,7 +69,6 @@ def rows_to_taxa(
     fa_common_name_colname,
     fa_scientific_name_colname,
     root_key,
-    synonym_delimiter,
 ):
     def by_genus(rows):
         return groupby(
@@ -115,9 +108,9 @@ def rows_to_taxa(
                 sp_sn = row[sp_scientific_name_colname]
                 species_key = generate_key(sp_sn)
                 sp_cns = normalize_common_name(
-                    row[sp_common_name_colname], synonym_delimiter)
+                    row[sp_common_name_colname])
                 sp_cn_syns = normalize_common_name(
-                    row[sp_common_name_syn_colname], synonym_delimiter)
+                    row[sp_common_name_syn_colname])
                 yield Taxon(
                     parent_key=genus_key,
                     key=species_key,
@@ -159,7 +152,6 @@ read_angiosperms = TaxonReader(
     fa_common_name_colname='APG科和名',
     fa_scientific_name_colname='APG科名',
     root_key='magnoliophyta',
-    synonym_delimiter=',',
 )
 
 
@@ -171,7 +163,6 @@ read_gymnosperms = TaxonReader(
     fa_common_name_colname='APG科和名',
     fa_scientific_name_colname='APG科名',
     root_key='ginkgophyta',
-    synonym_delimiter=',',
 )
 
 
@@ -183,7 +174,6 @@ read_ferns = TaxonReader(
     fa_common_name_colname='PPG科和名',
     fa_scientific_name_colname='PPG科名',
     root_key='pteridophyta',
-    synonym_delimiter=',',
 )
 
 
