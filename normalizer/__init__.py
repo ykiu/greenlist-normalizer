@@ -54,7 +54,13 @@ Taxon = namedtuple(
 
 def normalize_common_name(common_name: str, delim):
     return [
-        s.strip().replace("'", '')
+        s.replace(
+            "'", ''
+        ).replace(
+            '(中池)', ''
+        ).replace(
+            '(temp.)', ''
+        ).strip()
         for s in common_name.split(delim)
         if s != ''
     ]
