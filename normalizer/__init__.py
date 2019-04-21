@@ -60,7 +60,7 @@ def rows_to_taxa(
     fa_common_name_colname,
     fa_scientific_name_colname,
     root_key,
-    synonym_delimiter='ï¼Œ',
+    synonym_delimiter,
 ):
     def by_genus(rows):
         return groupby(
@@ -101,7 +101,8 @@ def rows_to_taxa(
                 species_key = generate_key(sp_sn)
                 sp_cn = row[sp_common_name_colname]
                 sp_cn_syn = [
-                    s for s in row[sp_common_name_syn_colname].split(
+                    s.strip()
+                    for s in row[sp_common_name_syn_colname].split(
                         synonym_delimiter)
                     if s != ''
                 ]
@@ -146,7 +147,7 @@ read_angiosperms = TaxonReader(
     fa_common_name_colname='APG科和名',
     fa_scientific_name_colname='APG科名',
     root_key='magnoliophyta',
-    synonym_delimiter='，',
+    synonym_delimiter=',',
 )
 
 
@@ -158,7 +159,7 @@ read_gymnosperms = TaxonReader(
     fa_common_name_colname='APG科和名',
     fa_scientific_name_colname='APG科名',
     root_key='ginkgophyta',
-    synonym_delimiter=', ',
+    synonym_delimiter=',',
 )
 
 
@@ -170,7 +171,7 @@ read_ferns = TaxonReader(
     fa_common_name_colname='PPG科和名',
     fa_scientific_name_colname='PPG科名',
     root_key='pteridophyta',
-    synonym_delimiter='，',
+    synonym_delimiter=',',
 )
 
 
