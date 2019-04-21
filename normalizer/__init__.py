@@ -112,64 +112,59 @@ def rows_to_taxa(
                 )
 
 
-@contextmanager
-def read_angiosperms():
-    with angiosperm_source_path.open(
-            encoding='utf8', newline='') as angiosperm_fp:
-        yield rows_to_taxa(
-            rows=DictReader(angiosperm_fp),
-            sp_common_name_colname='新リスト和名',
-            sp_common_name_syn_colname='和名異名',
-            sp_scientific_name_colname='GreenList学名',
-            fa_common_name_colname='APG科和名',
-            fa_scientific_name_colname='APG科名',
-            root_key='magnoliophyta',
-            synonym_delimiter='，',
-        )
+class TaxonReader:
+    def __init__(self, path, **kwargs):
+        self.path = path
+        self.kwargs = kwargs
+
+    @contextmanager
+    def __call__(self):
+        with self.path.open(
+                encoding='utf8', newline='') as fp:
+            yield rows_to_taxa(
+                rows=DictReader(fp),
+                **self.kwargs
+            )
 
 
-@contextmanager
-def read_gymnosperms():
-    with gymnosperm_source_path.open(
-            encoding='utf8', newline='') as gymnosperm_fp:
-        yield rows_to_taxa(
-            rows=DictReader(gymnosperm_fp),
-            sp_common_name_colname='GreenList和名',
-            sp_common_name_syn_colname='GreenList和名別名',
-            sp_scientific_name_colname='GreenList学名',
-            fa_common_name_colname='APG科和名',
-            fa_scientific_name_colname='APG科名',
-            root_key='ginkgophyta',
-            synonym_delimiter=', ',
-        )
+read_angiosperms = TaxonReader(
+    angiosperm_source_path,
+    sp_common_name_colname='新リスト和名',
+    sp_common_name_syn_colname='和名異名',
+    sp_scientific_name_colname='GreenList学名',
+    fa_common_name_colname='APG科和名',
+    fa_scientific_name_colname='APG科名',
+    root_key='magnoliophyta',
+    synonym_delimiter='，',
+)
 
 
-@contextmanager
-def read_ferns():
-    with fern_source_path.open(
-            encoding='utf8', newline='') as fern_fp:
-        yield rows_to_taxa(
-            rows=DictReader(fern_fp),
-            sp_common_name_colname='新リスト和名',
-            sp_common_name_syn_colname='和名異名',
-            sp_scientific_name_colname='GreenList学名',
-            fa_common_name_colname='PPG科和名',
-            fa_scientific_name_colname='PPG科名',
-            root_key='pteridophyta',
-            synonym_delimiter='，',
-        )
+read_gymnosperms = TaxonReader(
+    gymnosperm_source_path,
+    sp_common_name_colname='GreenList和名',
+    sp_common_name_syn_colname='GreenList和名別名',
+    sp_scientific_name_colname='GreenList学名',
+    fa_common_name_colname='APG科和名',
+    fa_scientific_name_colname='APG科名',
+    root_key='ginkgophyta',
+    synonym_delimiter=', ',
+)
 
 
-@contextmanager
-def destinations():
-    with \
-            taxon_dest_path.open(
-                'w', encoding='utf8', newline='') as taxon_fp, \
-            common_name_dest_path.open(
-                'w', encoding='utf8', newline='') as common_name_fp, \
-            scientific_name_dest_path.open(
-                'w', encoding='utf8', newline='') as scientific_name_fp:
-        yield taxon_fp, common_name_fp, scientific_name_fp
+read_ferns = TaxonReader(
+    fern_source_path,
+    sp_common_name_colname='新リスト和名',
+    sp_common_name_syn_colname='和名異名',
+    sp_scientific_name_colname='GreenList学名',
+    fa_common_name_colname='PPG科和名',
+    fa_scientific_name_colname='PPG科名',
+    root_key='pteridophyta',
+    synonym_delimiter='，',
+)
+
+
+def open_to_write(path):
+    return path.open('w', encoding='utf8', newline='')
 
 
 def normalize_all():
@@ -190,5 +185,7 @@ def normalize_all():
             gymnosperms_artifacts,
             angiosperms_artifacts,
         )
-        with destinations() as (taxon_fp, common_name_fp, scientific_name_fp):
+        with open_to_write(taxon_dest_path) as taxon_fp, \
+                open_to_write(common_name_dest_path) as common_name_fp, \
+                open_to_write(scientific_name_dest_path) as scientific_name_fp:
             dump(taxon_fp, common_name_fp, scientific_name_fp, all_artifacts)
