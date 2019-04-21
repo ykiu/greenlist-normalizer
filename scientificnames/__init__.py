@@ -47,7 +47,7 @@ def skip_except(exceptions):
 
 
 SKIP_NOT_INTERESTING = skip_except(
-    r'\b' + word + r'\s'
+    r'(?<=\s)' + word + r'\s'
     for word in SPECIEAL_WORDS
 )
 

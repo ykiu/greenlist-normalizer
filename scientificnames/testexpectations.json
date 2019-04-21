@@ -376,6 +376,34 @@
         }
     ],
     [
+        "author name that ends with f.",
+        "Rubus corchorifolius L.f. x R. palmatus Thunb.",
+        {
+            "hybrid_before_gen_0": null,
+            "genus_0": "Rubus",
+            "hybrid_before_sp_0": null,
+            "species_0": "corchorifolius",
+            "subsp_0": null,
+            "nothosubsp_0": null,
+            "var_0": null,
+            "nothovar_0": null,
+            "subvar_0": null,
+            "f_0": null,
+            "nothof_0": null,
+            "hybrid_before_gen_1": "x",
+            "genus_1": "R",
+            "hybrid_before_sp_1": null,
+            "species_1": "palmatus",
+            "subsp_1": null,
+            "nothosubsp_1": null,
+            "var_1": null,
+            "nothovar_1": null,
+            "subvar_1": null,
+            "f_1": null,
+            "nothof_1": null
+        }
+    ],
+    [
         "redundant spaces",
         "Sedum  japonicum  Siebold  ex  Miq.  subsp.  japonicum  var.  senanense  (Makino)  Makino  f.  leucanthemum  Honda",
         {
