@@ -78,13 +78,14 @@ def rows_to_taxa(
         )
 
     for sort_key, ((family_sn, family_cn), rows) in enumerate(by_family(rows)):
-        family_key = family_sn.lower()
+        family_sns = family_sn.split('/')
+        family_key = family_sns[0].lower()
         yield Taxon(
             parent_key=root_key,
             key=family_key,
             sort_key=sort_key,
             common_names=[family_cn],
-            scientific_names=[family_sn],
+            scientific_names=family_sns,
         )
         for sort_key, (genus_sn, rows) in enumerate(by_genus(rows)):
             genus_key = genus_sn.lower()
