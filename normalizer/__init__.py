@@ -1,3 +1,4 @@
+import unicodedata
 from contextlib import contextmanager
 from pathlib import Path
 from collections import namedtuple
@@ -112,6 +113,13 @@ def rows_to_taxa(
                 )
 
 
+def normalize_dictcontent(the_dict):
+    '''Normalize those evil full-width ('全角') characters'''
+    return {
+        k: unicodedata.normalize('NFKC', v) for k, v in the_dict.items()
+    }
+
+
 class TaxonReader:
     def __init__(self, path, **kwargs):
         self.path = path
@@ -121,8 +129,10 @@ class TaxonReader:
     def __call__(self):
         with self.path.open(
                 encoding='utf8', newline='') as fp:
+            csv_reader = DictReader(fp)
+            normalized_csv_rows = map(normalize_dictcontent, csv_reader)
             yield rows_to_taxa(
-                rows=DictReader(fp),
+                rows=normalized_csv_rows,
                 **self.kwargs
             )
 
