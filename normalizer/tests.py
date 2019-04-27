@@ -60,7 +60,6 @@ class RowsToTaxaTest(TestCase):
             fa_common_name_colname='APG科和名',
             fa_scientific_name_colname='APG科名',
             root_key='plants',
-            synonym_delimiter='，',
         ),)
         assert_equal(expected, actual)
 
