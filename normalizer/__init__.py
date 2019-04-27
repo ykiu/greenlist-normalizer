@@ -16,6 +16,11 @@ from paths import (
     normalized_scientific_name_path,
 )
 
+from normalizer.overrides import (
+    sp_key_overrides,
+    angiosperm_overrides,
+)
+
 
 def get_genus(string):
     return scientificnames.parse(string).group('genus_0')
@@ -52,6 +57,12 @@ Taxon = namedtuple(
     ['parent_key', 'key', 'sort_key', 'common_names', 'scientific_names'])
 
 
+def normalize_family_name(family_name: str):
+    cleaned_family_name = re.sub(r'\*', '', family_name)
+    split_fn = cleaned_family_name.split('/')
+    return split_fn
+
+
 def normalize_common_name(common_name: str):
     cleaned_cn = re.sub(r'[\(\[「].*?[\)\]」]|\'|自生\?', '', common_name)
     split_cn = [s.strip() for s in re.split(r'[\.\,。、]', cleaned_cn)]
@@ -84,7 +95,7 @@ def rows_to_taxa(
         )
 
     for sort_key, ((family_sn, family_cn), rows) in enumerate(by_family(rows)):
-        family_sns = family_sn.split('/')
+        family_sns = normalize_family_name(family_sn)
         family_key = family_sns[0].lower()
         yield Taxon(
             parent_key=root_key,
@@ -104,18 +115,22 @@ def rows_to_taxa(
             )
             for sort_key, row in enumerate(rows):
                 sp_sn = row[sp_scientific_name_colname]
-                species_key = generate_key(sp_sn)
+                sp_key = (
+                    sp_key_overrides.get(sp_sn, None)
+                    or generate_key(sp_sn))
                 sp_cns = normalize_common_name(
                     row[sp_common_name_colname])
                 sp_cn_syns = normalize_common_name(
                     row[sp_common_name_syn_colname])
-                yield Taxon(
-                    parent_key=genus_key,
-                    key=species_key,
-                    sort_key=sort_key,
-                    common_names=[*sp_cns, *sp_cn_syns],
-                    scientific_names=[sp_sn],
-                )
+                sp_all_cns = [*sp_cns, *sp_cn_syns]
+                if sp_all_cns:
+                    yield Taxon(
+                        parent_key=genus_key,
+                        key=sp_key,
+                        sort_key=sort_key,
+                        common_names=sp_all_cns,
+                        scientific_names=[sp_sn],
+                    )
 
 
 def normalize_dictcontent(the_dict):
@@ -125,17 +140,31 @@ def normalize_dictcontent(the_dict):
     }
 
 
+def apply_overrides(rows, overrides):
+    for index, row in enumerate(rows):
+        try:
+            signature, replacements = overrides[index]
+        except KeyError:
+            yield row
+        else:
+            assert all(row[k] == v for k, v in signature.items()), \
+                f'{row}\ndoes not match:\n{signature}'
+            yield from replacements
+
+
 class TaxonReader:
-    def __init__(self, path, **kwargs):
+    def __init__(self, path, overrides, **kwargs):
         self.path = path
         self.kwargs = kwargs
+        self.overrides = overrides
 
     @contextmanager
     def __call__(self):
         with self.path.open(
                 encoding='utf8', newline='') as fp:
             csv_reader = DictReader(fp)
-            normalized_csv_rows = map(normalize_dictcontent, csv_reader)
+            overridden_rows = apply_overrides(csv_reader, self.overrides)
+            normalized_csv_rows = map(normalize_dictcontent, overridden_rows)
             yield rows_to_taxa(
                 rows=normalized_csv_rows,
                 **self.kwargs
@@ -144,6 +173,7 @@ class TaxonReader:
 
 read_angiosperms = TaxonReader(
     angiosperm_csv_path,
+    overrides=angiosperm_overrides,
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
@@ -155,6 +185,7 @@ read_angiosperms = TaxonReader(
 
 read_gymnosperms = TaxonReader(
     gymnosperm_csv_path,
+    overrides={},
     sp_common_name_colname='GreenList和名',
     sp_common_name_syn_colname='GreenList和名別名',
     sp_scientific_name_colname='GreenList学名',
@@ -166,6 +197,7 @@ read_gymnosperms = TaxonReader(
 
 read_ferns = TaxonReader(
     fern_csv_path,
+    overrides={},
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
