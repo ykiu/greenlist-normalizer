@@ -12,8 +12,8 @@ BASE_FILENAMES = [
     'GreenListAv1.01',
     'GymGreenListv1.0'
 ]
-CSV_PATH = 'downloader/csv/'
-XLS_PATH = 'downloader/xls/'
+CSV_PATH = 'downloads/csv/'
+XLS_PATH = 'downloads/xls/'
 
 
 def download_xls_as_csv(url, xlsfile, csvfile):
@@ -28,8 +28,8 @@ def download_xls_as_csv(url, xlsfile, csvfile):
 
 
 def download_all():
-    Path(CSV_PATH).mkdir(exist_ok=True)
-    Path(XLS_PATH).mkdir(exist_ok=True)
+    Path(CSV_PATH).mkdir(exist_ok=True, parents=True)
+    Path(XLS_PATH).mkdir(exist_ok=True, parents=True)
     for base_filename in BASE_FILENAMES:
         url = GREENLIST_URL + base_filename + '.xls'
         with open(XLS_PATH + base_filename + '.xls', 'wb') as xlsfile,\

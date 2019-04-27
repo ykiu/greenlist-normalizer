@@ -10,13 +10,13 @@ import scientificnames
 from keygenerator import generate_key
 
 
-fern_source_path = Path('downloader/csv/FernGreenListV1.01.csv')
-angiosperm_source_path = Path('downloader/csv/GreenListAv1.01.csv')
-gymnosperm_source_path = Path('downloader/csv/GymGreenListv1.0.csv')
+fern_source_path = Path('downloads/csv/FernGreenListV1.01.csv')
+angiosperm_source_path = Path('downloads/csv/GreenListAv1.01.csv')
+gymnosperm_source_path = Path('downloads/csv/GymGreenListv1.0.csv')
 
-taxon_dest_path = Path('normalizer/normalized/taxa.csv')
-common_name_dest_path = Path('normalizer/normalized/common_names.csv')
-scientific_name_dest_path = Path('normalizer/normalized/scientific_names.csv')
+taxon_dest_path = Path('normalizations/taxa.csv')
+common_name_dest_path = Path('normalizations/common_names.csv')
+scientific_name_dest_path = Path('normalizations/scientific_names.csv')
 
 
 def get_genus(string):
@@ -178,6 +178,7 @@ read_ferns = TaxonReader(
 
 
 def open_to_write(path):
+    path.parent.mkdir(exist_ok=True, parents=True)
     return path.open('w', encoding='utf8', newline='')
 
 

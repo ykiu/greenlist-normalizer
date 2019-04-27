@@ -11,7 +11,6 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
 eggs/
 .eggs/
 lib/
@@ -110,5 +109,5 @@ venv.bak/
 dmypy.json
 
 # Specific to the greenlist normalizer project
-downloader/xls
-normalizer/normalized
+downloads/xls/
+normalizations/
