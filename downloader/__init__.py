@@ -4,16 +4,12 @@ from pathlib import Path
 
 import xlrd
 import requests
-
-
-GREENLIST_URL = 'http://www.rdplants.org/gl/'
-BASE_FILENAMES = [
-    'FernGreenListV1.01',
-    'GreenListAv1.01',
-    'GymGreenListv1.0'
-]
-CSV_PATH = 'downloads/csv/'
-XLS_PATH = 'downloads/xls/'
+from paths import (
+    greenlist_url,
+    csv_path,
+    xls_path,
+    basenames_by_taxon_names
+)
 
 
 def download_xls_as_csv(url, xlsfile, csvfile):
@@ -28,11 +24,11 @@ def download_xls_as_csv(url, xlsfile, csvfile):
 
 
 def download_all():
-    Path(CSV_PATH).mkdir(exist_ok=True, parents=True)
-    Path(XLS_PATH).mkdir(exist_ok=True, parents=True)
-    for base_filename in BASE_FILENAMES:
-        url = GREENLIST_URL + base_filename + '.xls'
-        with open(XLS_PATH + base_filename + '.xls', 'wb') as xlsfile,\
-                open(CSV_PATH + base_filename + '.csv',
+    Path(csv_path).mkdir(exist_ok=True, parents=True)
+    Path(xls_path).mkdir(exist_ok=True, parents=True)
+    for base_filename in basenames_by_taxon_names.values():
+        url = greenlist_url + base_filename + '.xls'
+        with xls_path.joinpath(base_filename + '.xls').open('wb') as xlsfile,\
+                csv_path.joinpath(base_filename + '.csv').open(
                      'w', newline='', encoding='utf8') as csvfile:
             download_xls_as_csv(url, xlsfile, csvfile)

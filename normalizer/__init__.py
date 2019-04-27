@@ -1,22 +1,20 @@
 import re
 import unicodedata
 from contextlib import contextmanager
-from pathlib import Path
 from collections import namedtuple
 from itertools import groupby, chain
 from csv import DictWriter, DictReader
 
 import scientificnames
 from keygenerator import generate_key
-
-
-fern_source_path = Path('downloads/csv/FernGreenListV1.01.csv')
-angiosperm_source_path = Path('downloads/csv/GreenListAv1.01.csv')
-gymnosperm_source_path = Path('downloads/csv/GymGreenListv1.0.csv')
-
-taxon_dest_path = Path('normalizations/taxa.csv')
-common_name_dest_path = Path('normalizations/common_names.csv')
-scientific_name_dest_path = Path('normalizations/scientific_names.csv')
+from paths import (
+    fern_csv_path,
+    angiosperm_csv_path,
+    gymnosperm_csv_path,
+    normalized_taxon_path,
+    normalized_common_name_path,
+    normalized_scientific_name_path,
+)
 
 
 def get_genus(string):
@@ -145,7 +143,7 @@ class TaxonReader:
 
 
 read_angiosperms = TaxonReader(
-    angiosperm_source_path,
+    angiosperm_csv_path,
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
@@ -156,7 +154,7 @@ read_angiosperms = TaxonReader(
 
 
 read_gymnosperms = TaxonReader(
-    gymnosperm_source_path,
+    gymnosperm_csv_path,
     sp_common_name_colname='GreenList和名',
     sp_common_name_syn_colname='GreenList和名別名',
     sp_scientific_name_colname='GreenList学名',
@@ -167,7 +165,7 @@ read_gymnosperms = TaxonReader(
 
 
 read_ferns = TaxonReader(
-    fern_source_path,
+    fern_csv_path,
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
@@ -200,7 +198,7 @@ def normalize_all():
             gymnosperms_artifacts,
             angiosperms_artifacts,
         )
-        with open_to_write(taxon_dest_path) as taxon_fp, \
-                open_to_write(common_name_dest_path) as common_name_fp, \
-                open_to_write(scientific_name_dest_path) as scientific_name_fp:
-            dump(taxon_fp, common_name_fp, scientific_name_fp, all_artifacts)
+        with open_to_write(normalized_taxon_path) as tx_fp, \
+                open_to_write(normalized_common_name_path) as cn_fp, \
+                open_to_write(normalized_scientific_name_path) as sn_fp:
+            dump(tx_fp, cn_fp, sn_fp, all_artifacts)
