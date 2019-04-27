@@ -1,4 +1,6 @@
-normalizations: downloads
+.PHONY: downloads normalizations
+
+normalizations:
 	- pipenv run python -c "import normalizer; normalizer.normalize_all()"
 
 validate:
