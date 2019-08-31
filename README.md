@@ -1,6 +1,6 @@
 # Green List Normalizer
 
-[Green List](http://www.rdplants.org/gl/) を整形し、Species IO [開発中] に取り込みます。
+[Green List](http://www.rdplants.org/gl/) を json 形式に整形し、オプショナルで Species IO [開発中] に取り込みます。
 
 ## 変換前
 
@@ -16,51 +16,69 @@
 
 こうなる:
 
-### taxa.csv
+### taxa.json
 
-|parent_key|key|sort_key|
-|:-|:-|:-|
-|plants|cabombaceae|0|
-|cabombaceae|brasenia|0|
-|brasenia|brasenia_schreberi|0|
-|plants|nymphaeaceae|1|
-|nymphaeaceae|euryale|0|
-|euryale|euryale_ferox|0|
-|nymphaeaceae|nuphar|1|
-|nuphar|nuphar_japonica|0|
-
-### common_names.csv
-
-|taxon_key|name|
-|:-|:-|
-|cabombaceae|ジュンサイ科|
-|brasenia_schreberi|ジュンサイ|
-|nymphaeaceae|スイレン科|
-|euryale_ferox|オニバス|
-|nuphar_japonica|コウホネ|
-
-
-### scientific_names.csv
-
-|taxon_key|name|
-|:-|:-|
-|cabombaceae|Cabombaceae|
-|brasenia|Brasenia|
-|brasenia_schreberi|Brasenia schreberi J.F.Gmel.|
-|nymphaeaceae|Nymphaeaceae|
-|euryale|Euryale|
-|euryale_ferox|Euryale ferox Salisb.|
-|nuphar|Nuphar|
-|nuphar_japonica|Nuphar japonica DC.|
+```json
+{
+  "taxa": [
+    {
+      "path": "/cabombaceae/",
+      "sort_key": 0,
+      "common_names": [{ "name": "ジュンサイ科" }],
+      "scientific_names": [{ "name": "Cabombaceae" }]
+    },
+    {
+      "path": "/cabombaceae/brasenia/",
+      "sort_key": 0,
+      "common_names": [],
+      "scientific_names": [{ "name": "Brasenia" }]
+    },
+    {
+      "path": "/cabombaceae/brasenia/brasenia_schreberi/",
+      "sort_key": 0,
+      "common_names": [{ "name": "ジュンサイ" }],
+      "scientific_names": [{ "name": "Brasenia schreberi J.F.Gmel." }]
+    },
+    {
+      "path": "/nymphaeaceae/",
+      "sort_key": 1,
+      "common_names": [{ "name": "スイレン科" }],
+      "scientific_names": [{ "name": "Nymphaeaceae" }]
+    },
+    {
+      "path": "/nymphaeaceae/euryale/",
+      "sort_key": 0,
+      "common_names": [],
+      "scientific_names": [{ "name": "Euryale" }]
+    },
+    {
+      "path": "/nymphaeaceae/euryale/euryale_ferox/",
+      "sort_key": 0,
+      "common_names": [{ "name": "オニバス" }],
+      "scientific_names": [{ "name": "Euryale ferox Salisb." }]
+    },
+    {
+      "path": "/nymphaeaceae/nuphar/",
+      "sort_key": 1,
+      "common_names": [],
+      "scientific_names": [{ "name": "Nuphar" }]
+    },
+    {
+      "path": "/nymphaeaceae/nuphar/nuphar_japonica/",
+      "sort_key": 0,
+      "common_names": [{ "name": "コウホネ" }],
+      "scientific_names": [{ "name": "Nuphar japonica DC." }]
+    }
+  ]
+}
+```
 
 ## 機能
 
-- 各分類群の URL-safe な ID を学名に基づいて自動生成。
-    - e.g. Brasenia schreberi J.F.Gmel. -> brasenia_schreberi
-- [隣接リスト方式](https://ja.wikipedia.org/wiki/%E9%9A%A3%E6%8E%A5%E3%83%AA%E3%82%B9%E3%83%88)で分類体系の木構造を表現。
-    - 門 (シダ植物門、裸子植物門、被子植物門)、科、属、種 (種内分類を含む) がノード。
-- 分類群と名前の一対多関係を[正規化](https://ja.wikipedia.org/wiki/%E9%96%A2%E4%BF%82%E3%81%AE%E6%AD%A3%E8%A6%8F%E5%8C%96)。
-- Species IO へのアップロード。
+- GreenList の CSV ファイルを JSON 形式に変換
+- ファイルパス形式で階層構造を表現
+    - 門 (シダ植物門、裸子植物門、被子植物門)、科、属、種 (種内分類を含む) ごとに階層が作られます。
+- Species IO [開発中] へのアップロード。
 
 ## インストール
 
@@ -92,13 +110,13 @@ $ make downloads
 次に、ダウンロードした Green List を整形します。
 
 ```
-$ make normalization
+$ make normalizations
 ```
 
 変換後のファイルは、`normalizations/` に生成されます。
 
-最後に、変換後のファイルを Species IO にアップロードします。
+変換後のファイルは Species IO にアップロードすることができます。
 
 ```
-$ pipenv run python -c "import uploader; uploader.upload('https://species.appspot.com/rest/taxonomy_versions/', '<User ID>', '<JWT>')"
+$ pipenv run python -c "import uploader; uploader.upload('https://species.appspot.com/rest/taxonomy_versions/', '<Taxonomy ID>', '<JWT>')"
 ```

@@ -2,6 +2,7 @@ from io import StringIO
 from pathlib import Path
 from unittest import TestCase
 from csv import DictReader
+import json
 
 
 from normalizer import (
@@ -18,27 +19,18 @@ def assert_equal(expected, actual):
 
 
 original_path = Path('normalizer/testdata/original.csv')
-taxa_path = Path('normalizer/testdata/normalized/taxa.csv')
-scientific_names_path = Path(
-    'normalizer/testdata/normalized/scientific_names.csv')
-common_names_path = Path(
-    'normalizer/testdata/normalized/common_names.csv')
+taxa_path = Path('normalizer/testdata/normalized/taxa.json')
 
 taxon_artifacts = (
-    Taxon('plants', 'cabombaceae', 0, ['ジュンサイ科'], ['Cabombaceae']),
-    Taxon('cabombaceae', 'brasenia', 0, [], ['Brasenia']),
-    Taxon('brasenia', 'brasenia_schreberi', 0, ['ジュンサイ'], ['Brasenia schreberi J.F.Gmel.']),  # noqa: E501
-    Taxon('plants', 'nymphaeaceae', 1, ['スイレン科'], ['Nymphaeaceae']),
-    Taxon('nymphaeaceae', 'euryale', 0, [], ['Euryale']),
-    Taxon('euryale', 'euryale_ferox', 0, ['オニバス'], ['Euryale ferox Salisb.']),
-    Taxon('nymphaeaceae', 'nuphar', 1, [], ['Nuphar']),
-    Taxon('nuphar', 'nuphar_japonica', 0, ['コウホネ'], ['Nuphar japonica DC.']),
+    Taxon('/cabombaceae/', 0, ['ジュンサイ科'], ['Cabombaceae']),
+    Taxon('/cabombaceae/brasenia/', 0, [], ['Brasenia']),
+    Taxon('/cabombaceae/brasenia/brasenia_schreberi/', 0, ['ジュンサイ'], ['Brasenia schreberi J.F.Gmel.']),  # noqa: E501
+    Taxon('/nymphaeaceae/', 1, ['スイレン科'], ['Nymphaeaceae']),
+    Taxon('/nymphaeaceae/euryale/', 0, [], ['Euryale']),
+    Taxon('/nymphaeaceae/euryale/euryale_ferox/', 0, ['オニバス'], ['Euryale ferox Salisb.']),  # noqa: E501
+    Taxon('/nymphaeaceae/nuphar/', 1, [], ['Nuphar']),
+    Taxon('/nymphaeaceae/nuphar/nuphar_japonica/', 0, ['コウホネ'], ['Nuphar japonica DC.']),  # noqa: E501
 )
-
-
-def read_content(path: Path):
-    with path.open(encoding='utf8', newline='\r\n') as fp:
-        return fp.read()
 
 
 class RowsToTaxaTest(TestCase):
@@ -59,7 +51,6 @@ class RowsToTaxaTest(TestCase):
             sp_scientific_name_colname='GreenList学名',
             fa_common_name_colname='APG科和名',
             fa_scientific_name_colname='APG科名',
-            root_key='plants',
         ),)
         assert_equal(expected, actual)
 
@@ -67,16 +58,11 @@ class RowsToTaxaTest(TestCase):
 class DumpTest(TestCase):
     def test_normal(self):
         taxa_fp = StringIO(newline='')
-        common_names_fp = StringIO(newline='')
-        scientific_names_fp = StringIO(newline='')
-        dump(taxa_fp, common_names_fp, scientific_names_fp, taxon_artifacts)
-        actual_taxa = taxa_fp.getvalue()
-        actual_common_names = common_names_fp.getvalue()
-        actual_scientific_names = scientific_names_fp.getvalue()
+        dump(taxa_fp, taxon_artifacts)
+        taxa_fp.seek(0)
+        actual_taxa = json.load(taxa_fp)
 
-        expected_taxa = read_content(taxa_path)
-        expected_common_names = read_content(common_names_path)
-        expected_scientific_names = read_content(scientific_names_path)
+        with taxa_path.open(encoding='utf8') as fp:
+            expected_taxa = json.load(fp)
+
         assert_equal(expected_taxa, actual_taxa)
-        assert_equal(expected_common_names, actual_common_names)
-        assert_equal(expected_scientific_names, actual_scientific_names)
