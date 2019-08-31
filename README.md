@@ -1,6 +1,6 @@
 # Green List Normalizer
 
-[Green List](http://www.rdplants.org/gl/) を整形します。
+[Green List](http://www.rdplants.org/gl/) を整形し、Species IO [開発中] に取り込みます。
 
 ## 変換前
 
@@ -60,6 +60,7 @@
 - [隣接リスト方式](https://ja.wikipedia.org/wiki/%E9%9A%A3%E6%8E%A5%E3%83%AA%E3%82%B9%E3%83%88)で分類体系の木構造を表現。
     - 門 (シダ植物門、裸子植物門、被子植物門)、科、属、種 (種内分類を含む) がノード。
 - 分類群と名前の一対多関係を[正規化](https://ja.wikipedia.org/wiki/%E9%96%A2%E4%BF%82%E3%81%AE%E6%AD%A3%E8%A6%8F%E5%8C%96)。
+- Species IO へのアップロード。
 
 ## インストール
 
@@ -95,3 +96,9 @@ $ make normalization
 ```
 
 変換後のファイルは、`normalizations/` に生成されます。
+
+最後に、変換後のファイルを Species IO にアップロードします。
+
+```
+$ pipenv run python -c "import uploader; uploader.upload('https://species.appspot.com/rest/taxonomy_versions/', '<User ID>', '<JWT>')"
+```
