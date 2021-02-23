@@ -162,15 +162,15 @@ class TaxonReader:
             )
 
 
-read_angiosperms = TaxonReader(
-    angiosperm_csv_path,
-    overrides=angiosperm_overrides,
+read_ferns = TaxonReader(
+    fern_csv_path,
+    overrides={},
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
-    fa_common_name_colname='APG科和名',
-    fa_scientific_name_colname='APG科名',
-    root_path='/magnoliophyta/',
+    fa_common_name_colname='PPG科和名',
+    fa_scientific_name_colname='PPG科名',
+    root_path='/000/',
 )
 
 
@@ -182,19 +182,19 @@ read_gymnosperms = TaxonReader(
     sp_scientific_name_colname='GreenList学名',
     fa_common_name_colname='APG科和名',
     fa_scientific_name_colname='APG科名',
-    root_path='/ginkgophyta/',
+    root_path='/001/',
 )
 
 
-read_ferns = TaxonReader(
-    fern_csv_path,
-    overrides={},
+read_angiosperms = TaxonReader(
+    angiosperm_csv_path,
+    overrides=angiosperm_overrides,
     sp_common_name_colname='新リスト和名',
     sp_common_name_syn_colname='和名異名',
     sp_scientific_name_colname='GreenList学名',
-    fa_common_name_colname='PPG科和名',
-    fa_scientific_name_colname='PPG科名',
-    root_path='/pteridophyta/',
+    fa_common_name_colname='APG科和名',
+    fa_scientific_name_colname='APG科名',
+    root_path='/002/',
 )
 
 
@@ -208,11 +208,11 @@ def normalize_all():
             read_gymnosperms() as gymnosperms_artifacts, \
             read_ferns() as ferns_artifacts:
         root_artifacts = [
-            Taxon('/pteridophyta/', 0,
+            Taxon('/000/', 0,
                   ['シダ植物門'], ['Pteridophyta']),
-            Taxon('/ginkgophyta/', 1,
+            Taxon('/001/', 1,
                   ['裸子植物門'], ['Ginkgophyta']),
-            Taxon('/magnoliophyta/', 2,
+            Taxon('/002/', 2,
                   ['被子植物門'], ['Magnoliophyta']),
         ]
         all_artifacts = chain(
