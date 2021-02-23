@@ -7,7 +7,7 @@ from itertools import groupby, chain
 from csv import DictReader
 
 import scientificnames
-from keygenerator import generate_key
+# from keygenerator import generate_key  # use numeric paths
 from paths import (
     fern_csv_path,
     angiosperm_csv_path,
@@ -16,13 +16,17 @@ from paths import (
 )
 
 from normalizer.overrides import (
-    sp_key_overrides,
+    # sp_key_overrides,  # use numeric paths
     angiosperm_overrides,
 )
 
 
 def get_genus(string):
     return scientificnames.parse(string).group('genus_0')
+
+def fmt_sort_key(index: int) -> str:
+    return str(index).rjust(3, '0')
+
 
 
 def dump(taxon_fp, taxa):
@@ -81,28 +85,31 @@ def rows_to_taxa(
             )
         )
 
-    for sort_key, ((family_sn, family_cn), rows) in enumerate(by_family(rows)):
+    for family_sort_key, ((family_sn, family_cn), rows) in enumerate(by_family(rows)):
         family_sns = normalize_family_name(family_sn)
-        family_key = family_sns[0].lower()
+        # family_key = family_sns[0].lower()  # use numeric paths
+        family_path = f'{root_path}{fmt_sort_key(family_sort_key)}/'
         yield Taxon(
-            path=f'{root_path}{family_key}/',
-            sort_key=sort_key,
+            path=family_path,
+            sort_key=family_sort_key,
             common_names=[family_cn],
             scientific_names=family_sns,
         )
-        for sort_key, (genus_sn, rows) in enumerate(by_genus(rows)):
-            genus_key = genus_sn.lower()
+        for genus_sort_key, (genus_sn, rows) in enumerate(by_genus(rows)):
+            # genus_key = genus_sn.lower()  # use numeric paths
+            genus_path = f'{family_path}{fmt_sort_key(genus_sort_key)}/'
             yield Taxon(
-                path=f'{root_path}{family_key}/{genus_key}/',
-                sort_key=sort_key,
+                path=genus_path,
+                sort_key=genus_sort_key,
                 common_names=[],
                 scientific_names=[genus_sn],
             )
-            for sort_key, row in enumerate(rows):
+            for sp_sort_key, row in enumerate(rows):
+                sp_path = f'{genus_path}{fmt_sort_key(sp_sort_key)}/'
                 sp_sn = row[sp_scientific_name_colname]
-                sp_key = (
-                    sp_key_overrides.get(sp_sn, None)
-                    or generate_key(sp_sn))
+                # sp_key = (  # use numeric paths
+                #     sp_key_overrides.get(sp_sn, None)
+                #     or generate_key(sp_sn))
                 sp_cns = normalize_common_name(
                     row[sp_common_name_colname])
                 sp_cn_syns = normalize_common_name(
@@ -110,8 +117,8 @@ def rows_to_taxa(
                 sp_all_cns = [*sp_cns, *sp_cn_syns]
                 if sp_all_cns:
                     yield Taxon(
-                        path=f'{root_path}{family_key}/{genus_key}/{sp_key}/',
-                        sort_key=sort_key,
+                        path=sp_path,
+                        sort_key=sp_sort_key,
                         common_names=sp_all_cns,
                         scientific_names=[sp_sn],
                     )

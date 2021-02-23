@@ -1,49 +1,49 @@
 {
   "taxa": [
     {
-      "path": "/cabombaceae/",
+      "path": "/000/",
       "sort_key": 0,
       "common_names": [{ "name": "ジュンサイ科" }],
       "scientific_names": [{ "name": "Cabombaceae" }]
     },
     {
-      "path": "/cabombaceae/brasenia/",
+      "path": "/000/000/",
       "sort_key": 0,
       "common_names": [],
       "scientific_names": [{ "name": "Brasenia" }]
     },
     {
-      "path": "/cabombaceae/brasenia/brasenia_schreberi/",
+      "path": "/000/000/000/",
       "sort_key": 0,
       "common_names": [{ "name": "ジュンサイ" }],
       "scientific_names": [{ "name": "Brasenia schreberi J.F.Gmel." }]
     },
     {
-      "path": "/nymphaeaceae/",
+      "path": "/001/",
       "sort_key": 1,
       "common_names": [{ "name": "スイレン科" }],
       "scientific_names": [{ "name": "Nymphaeaceae" }]
     },
     {
-      "path": "/nymphaeaceae/euryale/",
+      "path": "/001/000/",
       "sort_key": 0,
       "common_names": [],
       "scientific_names": [{ "name": "Euryale" }]
     },
     {
-      "path": "/nymphaeaceae/euryale/euryale_ferox/",
+      "path": "/001/000/000/",
       "sort_key": 0,
       "common_names": [{ "name": "オニバス" }],
       "scientific_names": [{ "name": "Euryale ferox Salisb." }]
     },
     {
-      "path": "/nymphaeaceae/nuphar/",
+      "path": "/001/001/",
       "sort_key": 1,
       "common_names": [],
       "scientific_names": [{ "name": "Nuphar" }]
     },
     {
-      "path": "/nymphaeaceae/nuphar/nuphar_japonica/",
+      "path": "/001/001/000/",
       "sort_key": 0,
       "common_names": [{ "name": "コウホネ" }],
       "scientific_names": [{ "name": "Nuphar japonica DC." }]

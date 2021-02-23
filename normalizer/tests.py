@@ -22,14 +22,14 @@ original_path = Path('normalizer/testdata/original.csv')
 taxa_path = Path('normalizer/testdata/normalized/taxa.json')
 
 taxon_artifacts = (
-    Taxon('/cabombaceae/', 0, ['ジュンサイ科'], ['Cabombaceae']),
-    Taxon('/cabombaceae/brasenia/', 0, [], ['Brasenia']),
-    Taxon('/cabombaceae/brasenia/brasenia_schreberi/', 0, ['ジュンサイ'], ['Brasenia schreberi J.F.Gmel.']),  # noqa: E501
-    Taxon('/nymphaeaceae/', 1, ['スイレン科'], ['Nymphaeaceae']),
-    Taxon('/nymphaeaceae/euryale/', 0, [], ['Euryale']),
-    Taxon('/nymphaeaceae/euryale/euryale_ferox/', 0, ['オニバス'], ['Euryale ferox Salisb.']),  # noqa: E501
-    Taxon('/nymphaeaceae/nuphar/', 1, [], ['Nuphar']),
-    Taxon('/nymphaeaceae/nuphar/nuphar_japonica/', 0, ['コウホネ'], ['Nuphar japonica DC.']),  # noqa: E501
+    Taxon('/000/', 0, ['ジュンサイ科'], ['Cabombaceae']),
+    Taxon('/000/000/', 0, [], ['Brasenia']),
+    Taxon('/000/000/000/', 0, ['ジュンサイ'], ['Brasenia schreberi J.F.Gmel.']),
+    Taxon('/001/', 1, ['スイレン科'], ['Nymphaeaceae']),
+    Taxon('/001/000/', 0, [], ['Euryale']),
+    Taxon('/001/000/000/', 0, ['オニバス'], ['Euryale ferox Salisb.']),
+    Taxon('/001/001/', 1, [], ['Nuphar']),
+    Taxon('/001/001/000/', 0, ['コウホネ'], ['Nuphar japonica DC.']),
 )
 
 
