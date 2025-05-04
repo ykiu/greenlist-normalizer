@@ -1,13 +1,14 @@
+from dataclasses import asdict, dataclass
 import re
+from typing import IO, Iterable, TextIO
 import unicodedata
 import json
 from contextlib import contextmanager
-from collections import namedtuple
 from itertools import groupby, chain
-from csv import DictReader
+from csv import DictReader, DictWriter
 
 import scientificnames
-# from keygenerator import generate_key  # use numeric paths
+from keygenerator import generate_key
 from paths import (
     fern_csv_path,
     angiosperm_csv_path,
@@ -16,9 +17,16 @@ from paths import (
 )
 
 from normalizer.overrides import (
-    # sp_key_overrides,  # use numeric paths
+    sp_key_overrides,
     angiosperm_overrides,
 )
+
+@dataclass
+class Taxon:
+    depth: int
+    slug: str
+    common_names: list[str]
+    scientific_names: list[str]
 
 
 def get_genus(string):
@@ -29,23 +37,15 @@ def fmt_sort_key(index: int) -> str:
 
 
 
-def dump(taxon_fp, taxa):
-    taxa_json = [{
-        'path': taxon.path,
-        'sort_key': taxon.sort_key,
-        'common_names': [
-            {'name': name} for name in taxon.common_names
-        ],
-        'scientific_names': [
-            {'name': name} for name in taxon.scientific_names
-        ],
-    } for taxon in taxa]
-    json.dump({"taxa": taxa_json}, taxon_fp, ensure_ascii=False)
-
-
-Taxon = namedtuple(
-    'Taxon',
-    ['path', 'sort_key', 'common_names', 'scientific_names'])
+def dump(taxon_fp: TextIO, taxa: Iterable[Taxon]):
+    w = DictWriter(taxon_fp, Taxon.__annotations__)
+    w.writeheader()
+    w.writerows({
+        "depth": taxon.depth,
+        "slug": taxon.slug,
+        "common_names": ';'.join(taxon.common_names),
+        "scientific_names": ';'.join(taxon.scientific_names),
+    } for taxon in taxa)
 
 
 def normalize_family_name(family_name: str):
@@ -85,31 +85,28 @@ def rows_to_taxa(
             )
         )
 
-    for family_sort_key, ((family_sn, family_cn), rows) in enumerate(by_family(rows)):
+    for (family_sn, family_cn), rows in by_family(rows):
         family_sns = normalize_family_name(family_sn)
-        # family_key = family_sns[0].lower()  # use numeric paths
-        family_path = f'{root_path}{fmt_sort_key(family_sort_key)}/'
+        family_slug = family_sns[0].lower()
         yield Taxon(
-            path=family_path,
-            sort_key=family_sort_key,
+            depth=1,
+            slug=family_slug,
             common_names=[family_cn],
             scientific_names=family_sns,
         )
-        for genus_sort_key, (genus_sn, rows) in enumerate(by_genus(rows)):
-            # genus_key = genus_sn.lower()  # use numeric paths
-            genus_path = f'{family_path}{fmt_sort_key(genus_sort_key)}/'
+        for genus_sn, rows in by_genus(rows):
+            genus_slug = genus_sn.lower()
             yield Taxon(
-                path=genus_path,
-                sort_key=genus_sort_key,
+                depth=2,
+                slug=genus_slug,
                 common_names=[],
                 scientific_names=[genus_sn],
             )
-            for sp_sort_key, row in enumerate(rows):
-                sp_path = f'{genus_path}{fmt_sort_key(sp_sort_key)}/'
+            for row in rows:
                 sp_sn = row[sp_scientific_name_colname]
-                # sp_key = (  # use numeric paths
-                #     sp_key_overrides.get(sp_sn, None)
-                #     or generate_key(sp_sn))
+                sp_slug = (
+                    sp_key_overrides.get(sp_sn, None)
+                    or generate_key(sp_sn))
                 sp_cns = normalize_common_name(
                     row[sp_common_name_colname])
                 sp_cn_syns = normalize_common_name(
@@ -117,8 +114,8 @@ def rows_to_taxa(
                 sp_all_cns = [*sp_cns, *sp_cn_syns]
                 if sp_all_cns:
                     yield Taxon(
-                        path=sp_path,
-                        sort_key=sp_sort_key,
+                        depth=3,
+                        slug=sp_slug,
                         common_names=sp_all_cns,
                         scientific_names=[sp_sn],
                     )
@@ -207,19 +204,16 @@ def normalize_all():
     with read_angiosperms() as angiosperms_artifacts, \
             read_gymnosperms() as gymnosperms_artifacts, \
             read_ferns() as ferns_artifacts:
-        root_artifacts = [
-            Taxon('/000/', 0,
+        taxa = [
+            Taxon(0, 'pteridophyta',
                   ['シダ植物門'], ['Pteridophyta']),
-            Taxon('/001/', 1,
+            *ferns_artifacts,
+            Taxon(0, 'ginkgophyta',
                   ['裸子植物門'], ['Ginkgophyta']),
-            Taxon('/002/', 2,
+            *gymnosperms_artifacts,
+            Taxon(0, 'magnoliophyta',
                   ['被子植物門'], ['Magnoliophyta']),
+            *angiosperms_artifacts,
         ]
-        all_artifacts = chain(
-            root_artifacts,
-            ferns_artifacts,
-            gymnosperms_artifacts,
-            angiosperms_artifacts,
-        )
         with open_to_write(normalized_taxon_path) as tx_fp:
-            dump(tx_fp, all_artifacts)
+            dump(tx_fp, taxa)

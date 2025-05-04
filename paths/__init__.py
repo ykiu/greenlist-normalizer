@@ -18,4 +18,4 @@ angiosperm_csv_path = csv_path.joinpath(
 gymnosperm_csv_path = csv_path.joinpath(
     basenames_by_taxon_names['gymnosperm'] + '.csv')
 
-normalized_taxon_path = Path('normalizations/taxa.json')
+normalized_taxon_path = Path('normalizations/taxa.csv')
